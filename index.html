@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html manifest="">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10, user-scalable=yes">
+
+    <title>myapp2</title>
+
+    <script>
+        var ucr = {
+            assetsPathDEV : "https://assetsdev.ucr.edu/apps/dev/sdope/",
+            assetsPathTEST: "https://assetsdev.ucr.edu/apps/test/sdope/",
+            assetsPathPROD: "https://assets.ucr.edu/apps/apps/prod/sdope",
+            dbPathDEV     : "https://ucphrdwtest.ucr.edu/",
+            dbPathTEST    : "https://ucphrdwtest.ucr.edu/",
+            dbPathPROD    : "https://ucphrdw.ucr.edu/"
+        };
+
+        var Ext = Ext || {};
+
+        Ext.beforeLoad = function(tags){
+            var vAssets = ucr.assetsPathPROD, vDB = ucr.dbPathPROD;
+
+            if( (/dev/i).test(location.href) ){
+                vAssets = ucr.assetsPathTEST;
+                vDB = ucr.dbPathTEST;
+            }
+
+            if( (/test/i).test(location.href) ){
+                vAssets = ucr.assetsPathTEST;
+                vDB = ucr.dbPathTEST;
+            }
+
+            if( (/prod/i).test(location.href) ){
+                vAssets = ucr.assetsPathPROD;
+                vDB = ucr.dbPathPROD;
+            }
+
+            console.log("vDB: "+vDB+", vAssets: "+vAssets);
+
+            Ext.manifest.css[0].path = vAssets + Ext.manifest.css[0].path;
+            Ext.manifest.js[0].path = vAssets + Ext.manifest.js[0].path;
+            Ext.manifest.resources.path = vAssets + Ext.manifest.resources.path; 
+            debugger;
+        }
+    </script>
+
+    <!-- The line below must be kept intact for Sencha Cmd to build your application -->
+    <script id="microloader" data-app="c7c4e3c0-0ed6-4540-9a6f-1c29bf34ed42" type="text/javascript" src="bootstrap.js"></script>
+    
+</head>
+<body></body>
+</html>
